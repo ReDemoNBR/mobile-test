@@ -181,6 +181,8 @@ window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
 screen.addEventListener("orientationchange", onOrientationChange);
+screen.addEventListener("mozorientationchange", onOrientationChange);
+
 
 function onDeviceMotion(e){
   let props = ["acceleration", "accelerationIncludingGravity", "rotationRate", "interval"], i = props.length;

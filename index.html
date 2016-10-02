@@ -1,6 +1,6 @@
 <div>Proximity Test</div>
 <table>
-  <thead><tr><th>API</th><th>Property</td><th>Value</th></tr></thead>
+  <thead><tr><th>API</th><th>Property</th><th>Value</th></tr></thead>
   <tr>
     <td rowspan="4">Device Motion</td>
     <td>acceleration</td>
@@ -43,20 +43,20 @@
   <tr>
     <td rowspan="3">Device Proximity</td>
     <td>max</td>
-    <td><span id="deviceproximity-max">No value</span> cm</td>
+    <td><span id="deviceproximity-max">Hover your hand over proximity sensor</span> cm</td>
   </tr>
   <tr>
     <td>min</td>
-    <td><span id="deviceproximity-min">No value</span> cm</td>
+    <td><span id="deviceproximity-min">Hover your hand over proximity sensor</span> cm</td>
   </tr>
   <tr>
     <td>value</td>
-    <td><span id="deviceproximity-value">No value</span> cm</td>
+    <td><span id="deviceproximity-value">Hover your hand over proximity sensor</span> cm</td>
   </tr>
   <tr>
     <td>User Proximity</td>
     <td>near</td>
-    <td><span id="userproximity-near">No value</span></td>
+    <td><span id="userproximity-near">Hover your hand over proximity sensor</span></td>
   </tr>
   <tr>
     <td rowspan="9">Navigator</td>
@@ -115,19 +115,72 @@
     <td>dischargingTime</td>
     <td><span id="battery-dischargingTime">No value</span></td>
   </tr>
+  <tr>
+    <td rowspan="7">Screen</td>
+    <td>availWidth</td>
+    <td><span id="screen-availWidth">No value</span></td>
+  </tr>
+  <tr>
+    <td>availHeight</td>
+    <td><span id="screen-availHeight">No value</span></td>
+  </tr>
+  <tr>
+    <td>width</td>
+    <td><span id="screen-width">No value</span></td>
+  </tr>
+  <tr>
+    <td>height</td>
+    <td><span id="screen-height">No value</span></td>
+  </tr>
+  <tr>
+    <td>colorDepth</td>
+    <td><span id="screen-colorDepth">No value</span></td>
+  </tr>
+  <tr>
+    <td>pixelDepth</td>
+    <td><span id="screen-pixelDepth">No value</span></td>
+  </tr>
+  <tr>
+    <td>orientation.angle</td>
+    <td><span id="screen-orientation.angle">No value</span></td>
+  </tr>
+  <tr>
+    <td>orientation.type</td>
+    <td><span id="screen-orientation.type">No value</span></td>
+  </tr>
+  <tr>
+    <td>devicePixelRatio (from window Object)</td>
+    <td><span id="window-devicePixelRatio">No value</span></td>
+  </tr>
+  <tr>
+    <td>Resolution* (with devicePixelRatio applied)</td>
+    <td><span id="screen-Resolution">No value</span></td>
+  </tr>
 </table>
 <script>
-window.addEventListener("devicemotion", onDeviceMotion, true);
-window.addEventListener("devicelight", onDeviceLight);
-window.addEventListener("deviceorientation", onDeviceOrientation, true);
-window.addEventListener("deviceproximity", onDeviceProximity);
-window.addEventListener("userproximity", onUserProximity);
+let array = []
+if(window.DeviceMotionEvent)
+  window.addEventListener("devicemotion", onDeviceMotion);
+else array.push("devicemotion-acceleration", "devicemotion-accelerationIncludingGravity", "devicemotion-rotationRate", "devicemotion-interval");
+if(window.DeviceLightEvent)
+  window.addEventListener("devicelight", onDeviceLight);
+else array.push("devicelight-value");
+if(window.DeviceOrientationEvent)
+  window.addEventListener("deviceorientation", onDeviceOrientation);
+else array.push("deviceorientation-absolute" ""deviceorientation-alpha", "deviceorientation-beta", "deviceorientation-gamma");
+if(window.DeviceProximityEvent)
+  window.addEventListener("deviceproximity", onDeviceProximity);
+else array.push("deviceproximity-max", "deviceproximity-min", "deciveproximity-value");
+if(window.UserProximityEvent)
+  window.addEventListener("userproximity", onUserProximity);
+else array.push("userproximity-near");
 document.addEventListener("DOMContentLoaded", onLoad);
 window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);
 window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
+screen.addEventListener("orientationchange", onOrientationChange);
 
 function onDeviceMotion(e){
   let props = ["acceleration", "accelerationIncludingGravity", "rotationRate", "interval"], i = props.length;
@@ -177,6 +230,8 @@ function onLoad(){
     battery.addEventListener("chargingtimechange", ()=>document.getElementById("battery-chargingTime").innerHTML = JSON.stringify(battery.chargingTime));
     battery.addEventListener("dischargingtimechange", ()=>document.getElementById("battery-dischargingTime").innerHTML = JSON.stringify(battery.dischargingTime));
   });
+  onOrientationChange();
+  updateOnlineStatus();
 }
 
 function vibrateSample(){
@@ -195,5 +250,18 @@ function VRs(){
 
 function updateOnlineStatus(e){
   document.getElementById("navigator-onLine").innerHTML = JSON.stringify(navigator.onLine);
+}
+
+function onOrientationChange(e){
+  let props = ["availWidth", "availHeight", "width", "height", "colorDepth", "pixelDepth"], orientationProps = ["angle", "type"], i = props.length;
+  while(i--){
+    document.getElementById("screen-"+props[i]).innerHTML = screen[props[i]];
+  }
+  i = orientationProps.length;
+  while(i--){
+    document.getElementById("screen-orientation."+orientationProps[i]).innerHTML = screen.orientation[orientationProps[i]];
+  }
+  document.getElementById("window-devicePixelRatio").innerHTML = window.devicePixelRatio;
+  document.getElementById("screen-Resolution").innerHTML = (screen.width*window.devicePixelRatio)+"x"+(screen.height*window.devicePixelRatio);
 }
 </script>

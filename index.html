@@ -180,9 +180,10 @@ window.addEventListener("offline", updateOnlineStatus);
 window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
-//window.addEventListener("orientationchange", onOrientationChange);
+//check if is possible to add an event listener to the screen... only in Firefox!
 if(screen.addEventListener)
   screen.addEventListener("mozorientationchange", (e)=>setTimeout(()=>onOrientationChange(e), 0));
+else window.addEventListener("orientationchange", onOrientationChange);
 
 
 function onDeviceMotion(e){

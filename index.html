@@ -1,0 +1,194 @@
+<div>Proximity Test</div>
+<table>
+  <thead><tr><th>API</th><th>Property</td><th>Value</th></tr></thead>
+  <tr>
+    <td rowspan="4">Device Motion</td>
+    <td>acceleration</td>
+    <td><span id="devicemotion-acceleration">No value</span> m/s<sup>2</sup></td>
+  </tr>
+  <tr>
+    <td>accelerationIncludingGravity</td>
+    <td><span id="devicemotion-accelerationIncludingGravity">No value</span> m/s<sup>2</sup></td>
+  </tr>
+  <tr>
+    <td>rotationRate</td>
+    <td><span id="devicemotion-rotationRate">No value</span> &deg;/s</td>
+  </tr>
+  <tr>
+    <td>interval</td>
+    <td><span id="devicemotion-interval">No value</span> ms</td>
+  </tr>
+  <tr>
+    <td>Device Light</td>
+    <td>value</td>
+    <td><span id="devicelight">No value</span> lux</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Device Orientation</td>
+    <td>absolute</td>
+    <td><span id="deviceorientation-absolute">No value</span> &deg;</td>
+  </tr>
+  <tr>
+    <td>alpha</td>
+    <td><span id="deviceorientation-alpha">No value</span> &deg;</td>
+  </tr>
+  <tr>
+    <td>beta</td>
+    <td><span id="deviceorientation-beta">No value</span> &deg;</td>
+  </tr>
+  <tr>
+    <td>gamma</td>
+    <td><span id="deviceorientation-gamma">No value</span> &deg;</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Device Proximity</td>
+    <td>max</td>
+    <td><span id="deviceproximity-absolute">No value</span> cm</td>
+  </tr>
+  <tr>
+    <td>min</td>
+    <td><span id="deviceproximity-absolute">No value</span> cm</td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td><span id="deviceproximity-absolute">No value</span> cm</td>
+  </tr>
+  <tr>
+    <td>User Proximity</td>
+    <td>near</td>
+    <td><span id="userproximity-near">No value</span></td>
+  </tr>
+  <tr>
+    <td rowspan="9">Navigator</td>
+    <td>activeVRDisplays</td>
+    <td><span id="navigator-activeVRDisplays">No value</span></td>
+  </tr>
+  <tr>
+    <td>languages</td>
+    <td><span id="navigator-languages">No value</span></td>
+  </tr>
+  <tr>
+    <td>hardwareConcurrency</td>
+    <td><span id="navigator-hardwareConcurrency">No value</span></td>
+  </tr>
+  <tr>
+    <td>getGamepads</td>
+    <td><span id="navigator-getGamepads">No value</span></td>
+  </tr>
+  <tr>
+    <td>getVRDisplays</td>
+    <td><span id="navigator-getVRDisplays">No value</span></td>
+  </tr>
+  <tr>
+    <td>maxTouchPoints</td>
+    <td><span id="navigator-maxTouchPoints">No value</span></td>
+  </tr>
+  <tr>
+    <td>onLine</td>
+    <td><span id="navigator-onLine">No value</span></td>
+  </tr>
+  <tr>
+    <td>oscpu</td>
+    <td><span id="navigator-oscpu">No value</span></td>
+  </tr>
+  <tr>
+    <td>vibrate</td>
+    <td>
+      <input type="button" value="vibrate 250ms" onclick="vibrateSample()" />
+      <input type="button" value="vibrate SOS in Morse" onclick="vibrateSOS()" />
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="7">Battery</td>
+    <td>charging</td>
+    <td><span id="battery-charging">No value</span></td>
+  </tr>
+  <tr>
+    <td>level</td>
+    <td><span id="battery-level">No value</span></td>
+  </tr>
+  <tr>
+    <td>chargingTime</td>
+    <td><span id="battery-chargingTime">No value</span></td>
+  </tr>
+  <tr>
+    <td>dischargingTime</td>
+    <td><span id="battery-dischargingTime">No value</span></td>
+  </tr>
+</table>
+<script>
+window.addEventListener("devicemotion", onDeviceMotion);
+window.addEventListener("devicelight", onDeviceLight);
+window.addEventListener("deviceorientation", onDeviceOrientation);
+window.addEventListener("deviceproximity", onDeviceProximity);
+window.addEventListener("userproximity", onUserProximity);
+document.addEventListener("DOMContentLoaded", onLoad);
+//VRs
+window.addEventListener("vrdisplayconnected", VRs);
+window.addEventListener("vrdisplaydisconnected", VRs);
+window.addEventListener("vrdisplaypresentchange", VRs);
+
+function onDeviceMotion(e){
+  let props = ["acceleration", "accelerationIncludingGravity", "rotationRate", "interval"], i = props.length;
+  while(i--){
+    document.getElementById("devicemotion-"+props[i]).innerHTML = JSON.stringify(e[props[i]], null, "\t");
+  }
+}
+
+function onDeviceLight(e){
+  document.getElementById("devicelight").innerHTML = JSON.stringify(e.value, null, "\t");
+}
+
+function onDeviceOrientation(e){
+  let props = ["absolute", "alpha", "beta", "gamma"], i = props.length;
+  while(i--){
+    document.getElementById("deviceorientation-"+props[i]).innerHTML = JSON.stringify(e[props[i]], null, "\t");
+  }
+}
+
+function onDeviceProximity(e){
+  let props = ["max", "min", "value"], i = props.length;
+  while(i--){
+    document.getElementById("deviceproximity-"+props[i]).innerHTML = JSON.stringify(e[props[i]], null, "\t");
+  }
+}
+
+function onUserProximity(e){
+  document.getElementById("userproximity-near").innerHTML = JSON.stringify(e.near, null, "\t");
+}
+
+function onLoad(){
+  document.getElementById("navigator-activeVRDisplays").innerHTML = JSON.stringify(navigator.activeVRDisplays);
+  document.getElementById("navigator-languages").innerHTML = JSON.stringify(navigator.languages);
+  document.getElementById("navigator-hardwareConcurrency").innerHTML = JSON.stringify(navigator.hardwareConcurrency);
+  document.getElementById("navigator-getGamepads").innerHTML = JSON.stringify(navigator.getGamepads());
+  VRs();
+  document.getElementById("navigator-maxTouchPoints").innerHTML = JSON.stringify(navigator.maxTouchPoints);
+  document.getElementById("navigator-onLine").innerHTML = JSON.stringify(navigator.onLine);
+  document.getElementById("navigator-oscpu").innerHTML = JSON.stringify(navigator.oscpu);
+  navigator.getBattery().then(battery=>{
+    document.getElementById("battery-charging").innerHTML = JSON.stringify(battery.charging);
+    document.getElementById("battery-level").innerHTML = JSON.stringify(battery.level);
+    document.getElementById("battery-chargingTime").innerHTML = JSON.stringify(battery.chargingTime);
+    document.getElementById("battery-dischargingTime").innerHTML = JSON.stringify(battery.dischargingTime);
+    battery.addEventListener("chargingchange", ()=>document.getElementById("battery-charging").innerHTML = JSON.stringify(battery.charging));
+    battery.addEventListener("levelchange", ()=>document.getElementById("battery-level").innerHTML = JSON.stringify(battery.level));
+    battery.addEventListener("chargingtimechange", ()=>document.getElementById("battery-chargingTime").innerHTML = JSON.stringify(battery.chargingTime));
+    battery.addEventListener("dischargingtimechange", ()=>document.getElementById("battery-dischargingTime").innerHTML = JSON.stringify(battery.dischargingTime));
+  });
+}
+
+function vibrateSample(){
+  navigator.vibrate(250);
+}
+
+function vibrateSOS(){
+  navigator.vibrate([100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30, 100]);
+}
+
+function VRs(){
+  if(navigator.getVRDisplays){
+    navigator.getVRDisplays().then(VRs=>document.getElementById("navigator-getVRDisplays").innerHTML = JSON.stringify(VRs));
+  }
+}
+</script>

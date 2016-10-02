@@ -180,8 +180,9 @@ window.addEventListener("offline", updateOnlineStatus);
 window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
-window.addEventListener("orientationchange", onOrientationChange);
-//window.addEventListener("mozorientationchange", onOrientationChange);
+//window.addEventListener("orientationchange", onOrientationChange);
+if(screen.addEventListener)
+  screen.addEventListener("mozorientationchange", onOrientationChange);
 
 
 function onDeviceMotion(e){

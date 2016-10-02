@@ -182,7 +182,7 @@ window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
 //window.addEventListener("orientationchange", onOrientationChange);
 if(screen.addEventListener)
-  screen.addEventListener("mozorientationchange", (e)=>setTimeout(()=>onOrientationChange(e), 2000));
+  screen.addEventListener("mozorientationchange", (e)=>setTimeout(()=>onOrientationChange(e), 200));
 
 
 function onDeviceMotion(e){

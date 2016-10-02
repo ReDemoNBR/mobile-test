@@ -94,7 +94,7 @@
   <tr>
     <td>vibrate</td>
     <td>
-      <input type="button" value="vibrate 250ms" onclick="vibrateSample()" />
+      <input type="button" value="vibrate for 1s" onclick="vibrateSample()" />
       <input type="button" value="vibrate SOS in Morse" onclick="vibrateSOS()" />
     </td>
   </tr>
@@ -117,13 +117,14 @@
   </tr>
 </table>
 <script>
-window.addEventListener("devicemotion", onDeviceMotion);
+window.addEventListener("devicemotion", onDeviceMotion, true);
 window.addEventListener("devicelight", onDeviceLight);
-window.addEventListener("deviceorientation", onDeviceOrientation);
+window.addEventListener("deviceorientation", onDeviceOrientation, true);
 window.addEventListener("deviceproximity", onDeviceProximity);
 window.addEventListener("userproximity", onUserProximity);
 document.addEventListener("DOMContentLoaded", onLoad);
-//VRs
+window.addEventListener("online", updateOnlineStatus);
+window.addEventListener("offline", updateOnlineStatus);
 window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
@@ -179,16 +180,20 @@ function onLoad(){
 }
 
 function vibrateSample(){
-  navigator.vibrate(250);
+  navigator.vibrate(1000);
 }
 
 function vibrateSOS(){
-  navigator.vibrate([100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30, 100]);
+  navigator.vibrate([250, 50, 250, 50, 250, 50, 400, 50, 400, 50, 400, 50, 250, 50, 250, 50, 250]);
 }
 
 function VRs(){
   if(navigator.getVRDisplays){
     navigator.getVRDisplays().then(VRs=>document.getElementById("navigator-getVRDisplays").innerHTML = JSON.stringify(VRs));
   }
+}
+
+function updateOnlineStatus(e){
+  document.getElementById("navigator-onLine").innerHTML = JSON.stringify(navigator.onLine);
 }
 </script>

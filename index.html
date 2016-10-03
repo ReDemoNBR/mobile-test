@@ -257,12 +257,6 @@ function updateOnlineStatus(e){
 }
 
 function onOrientationChange(e){
-  console.log("on orientation change");
-  console.log(e);
-  console.log(screen.orientation);
-  console.log(screen.mozOrientation);
-  console.log(e.target.orientation);
-  console.log(e.target.mozOrientation);
   let props = ["availWidth", "availHeight", "width", "height", "colorDepth", "pixelDepth"], orientationProps = ["angle", "type"], i = props.length;
   while(i--){
     document.getElementById("screen-"+props[i]).innerHTML = screen[props[i]];
@@ -274,4 +268,5 @@ function onOrientationChange(e){
   document.getElementById("window-devicePixelRatio").innerHTML = window.devicePixelRatio;
   document.getElementById("screen-Resolution").innerHTML = (screen.width*window.devicePixelRatio)+"x"+(screen.height*window.devicePixelRatio);
 }
+onOrientationChange();
 </script>

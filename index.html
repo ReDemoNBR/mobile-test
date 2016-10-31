@@ -1,3 +1,4 @@
+<div id="divUserAgent"></div>
 <div>Proximity Test</div>
 <table>
   <thead><tr><th>API</th><th>Property</th><th>Value</th></tr></thead>
@@ -158,6 +159,7 @@
   </tr>
 </table>
 <script>
+window.onload = function(){document.getElementById("divUserAgent").innerHTML = navigator.userAgent;};
 let array = []
 if(window.DeviceMotionEvent)
   window.addEventListener("devicemotion", onDeviceMotion);

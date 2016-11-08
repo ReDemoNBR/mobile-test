@@ -232,7 +232,7 @@ function onLoad(){
   let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if(connection){
     document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(connection.type);
-    document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(connection.downlinkMax);
+    document.getElementById("navigator-connection-downlinkMax").innerHTML = connection.downlinkMax;
   }
   document.getElementById("navigator-languages").innerHTML = JSON.stringify(navigator.languages);
   document.getElementById("navigator-hardwareConcurrency").innerHTML = JSON.stringify(navigator.hardwareConcurrency);
@@ -276,7 +276,7 @@ function updateOnlineStatus(e){
 function updateConnectionInfo(){
   let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(connection.type);
-  document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(connection.downlinkMax);
+  document.getElementById("navigator-connection-downlinkMax").innerHTML = connection.downlinkMax;
 }
 
 function onOrientationChange(e){

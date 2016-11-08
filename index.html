@@ -230,8 +230,10 @@ function onUserProximity(e){
 function onLoad(){
   document.getElementById("navigator-activeVRDisplays").innerHTML = JSON.stringify(navigator.activeVRDisplays);
   let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(connection.type);
-  document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(connection.downlinkMax);
+  if(connection){
+    document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(connection.type);
+    document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(connection.downlinkMax);
+  }
   document.getElementById("navigator-languages").innerHTML = JSON.stringify(navigator.languages);
   document.getElementById("navigator-hardwareConcurrency").innerHTML = JSON.stringify(navigator.hardwareConcurrency);
   document.getElementById("navigator-getGamepads").innerHTML = JSON.stringify(navigator.getGamepads());

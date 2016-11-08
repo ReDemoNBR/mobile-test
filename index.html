@@ -60,10 +60,13 @@
     <td><span id="userproximity-near">Hover your hand over proximity sensor</span></td>
   </tr>
   <tr>
-    <td rowspan="9">Navigator</td>
+    <td rowspan="10">Navigator</td>
     <td>activeVRDisplays</td>
     <td><span id="navigator-activeVRDisplays">No value</span></td>
   </tr>
+  <tr>
+    <td>connection</td>
+    <td>type: <span id="navigator-connection-type">No value</span> - downlinkMax: <span id="navigator-connection-downlinkMax">No value</span></td>
   <tr>
     <td>languages</td>
     <td><span id="navigator-languages">No value</span></td>
@@ -159,7 +162,10 @@
   </tr>
 </table>
 <script>
-window.onload = function(){document.getElementById("divUserAgent").innerHTML = navigator.userAgent;};
+window.onload = function(){
+  document.getElementById("divUserAgent").innerHTML = navigator.userAgent;
+  onLoad();
+};
 let array = []
 if(window.DeviceMotionEvent)
   window.addEventListener("devicemotion", onDeviceMotion);
@@ -182,6 +188,8 @@ window.addEventListener("offline", updateOnlineStatus);
 window.addEventListener("vrdisplayconnected", VRs);
 window.addEventListener("vrdisplaydisconnected", VRs);
 window.addEventListener("vrdisplaypresentchange", VRs);
+if(navigator.connection)
+  navigator.connection.addEventListener("change", updateConnectionInfo);
 //check if is possible to add an event listener to the screen... only in Firefox!
 if(screen.addEventListener)
   screen.addEventListener("mozorientationchange", (e)=>setTimeout(()=>onOrientationChange(e), 0));
@@ -219,6 +227,8 @@ function onUserProximity(e){
 
 function onLoad(){
   document.getElementById("navigator-activeVRDisplays").innerHTML = JSON.stringify(navigator.activeVRDisplays);
+  document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(navigator.connection.type);
+  document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(navigator.connection.downlinkMax);
   document.getElementById("navigator-languages").innerHTML = JSON.stringify(navigator.languages);
   document.getElementById("navigator-hardwareConcurrency").innerHTML = JSON.stringify(navigator.hardwareConcurrency);
   document.getElementById("navigator-getGamepads").innerHTML = JSON.stringify(navigator.getGamepads());
@@ -256,6 +266,11 @@ function VRs(){
 
 function updateOnlineStatus(e){
   document.getElementById("navigator-onLine").innerHTML = JSON.stringify(navigator.onLine);
+}
+
+function updateConnectionInfo(){
+  document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(navigator.connection.type);
+  document.getElementById("navigator-connection-downlinkMax").innerHTML = JSON.stringify(navigator.connection.downlinkMax);
 }
 
 function onOrientationChange(e){

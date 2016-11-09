@@ -70,7 +70,8 @@
   </tr>
   <tr>
     <td>connection.downlinkMax</td>
-    <td><span id="navigator-connection-downlinkMax">No value</span> Mb/s
+    <td><span id="navigator-connection-downlinkMax">No value</span> Mb/s</td>
+  </tr>
   <tr>
     <td>languages</td>
     <td><span id="navigator-languages">No value</span></td>
@@ -235,7 +236,7 @@ function onLoad(){
   document.getElementById("navigator-activeVRDisplays").innerHTML = JSON.stringify(navigator.activeVRDisplays);
   let connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if(connection){
-    document.getElementById("navigator-connection-type").innerHTML = JSON.stringify(connection.type);
+    document.getElementById("navigator-connection-type").innerHTML = connection.type;
     document.getElementById("navigator-connection-downlinkMax").innerHTML = connection.downlinkMax;
   }
   document.getElementById("navigator-languages").innerHTML = JSON.stringify(navigator.languages);

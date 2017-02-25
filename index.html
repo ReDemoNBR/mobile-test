@@ -97,7 +97,7 @@
     <td><span id="navigator-onLine">No value</span></td>
   </tr>
   <tr>
-    <td>oscpu</td>
+    <td>oscpu || platform</td>
     <td><span id="navigator-oscpu">No value</span></td>
   </tr>
   <tr>
@@ -245,7 +245,7 @@ function onLoad(){
   VRs();
   document.getElementById("navigator-maxTouchPoints").innerHTML = JSON.stringify(navigator.maxTouchPoints);
   document.getElementById("navigator-onLine").innerHTML = JSON.stringify(navigator.onLine);
-  document.getElementById("navigator-oscpu").innerHTML = JSON.stringify(navigator.oscpu);
+  document.getElementById("navigator-oscpu").innerHTML = JSON.stringify(navigator.oscpu || navigator.platform);
   navigator.getBattery().then(battery=>{
     document.getElementById("battery-charging").innerHTML = JSON.stringify(battery.charging);
     document.getElementById("battery-level").innerHTML = JSON.stringify(battery.level);
